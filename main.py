@@ -2,53 +2,11 @@ from tkinter import *
 from tkinter import ttk
 import sqlite3 as sq
 
-from reportlab.pdfgen import canvas
-from reportlab.lib.pagesizes import letter, A4
-from reportlab.pdfbase import pdfmetrics
-from reportlab.pdfbase.ttfonts import TTFont
-from reportlab.platypus import SimpleDocTemplate, Image
-import webbrowser
-
-
 corFundo='#33605a'
 corFrame='#e9e0d1'
 corBorda='#91a398'
 corbotao='#68462b'
 janela = Tk()
-
-
-class relatorios():
-    def printcontatos(self):
-        webbrowser.open('contatos.pdf')
-    def gerar_relatorio(self):
-        self.c = canvas.Canvas('contatos.pdf')
-
-        self.idRel = self.id_entry.get()
-        self.nomeRel = self.nome_entry.get()
-        self.numeroRel = self.numero_entry.get()
-        self.emailRel = self.email_entry.get()
-
-        self.c.setFont('Helvetica-Bold', 24)
-        self.c.drawString(200, 790, 'Ficha do Contato')
-
-        self.c.setFont('Helvetica-Bold', 18)
-        self.c.drawString(50, 700, 'Id:')
-        self.c.drawString(50, 670, 'Nome:')
-        self.c.drawString(50, 640, 'Número:')
-        self.c.drawString(50, 610, 'E-mail:')
-
-        self.c.setFont('Helvetica', 18)
-        self.c.drawString(150, 700, self.idRel)
-        self.c.drawString(150, 670, self.nomeRel)
-        self.c.drawString(150, 640, self.numeroRel)
-        self.c.drawString(150, 610, self.emailRel)
-
-        self.c.rect(20, 550, 550, 3, fill=True, stroke=False)
-
-        self.c.showPage()
-        self.c.save()
-        self.printcontatos()
-
 
 class funcao():
     def limpa_tela(self):
@@ -139,7 +97,7 @@ class funcao():
         self.desconecta_bd()
 
 
-class aplicativo(funcao, relatorios):
+class aplicativo(funcao):
     def __init__(self):
         self.janela = janela
         self.janelaop()
@@ -221,12 +179,10 @@ class aplicativo(funcao, relatorios):
         def quit(): self.janela.destroy()
 
         menubar.add_cascade(label= "Opções", menu= filemenu)
-        menubar.add_cascade(label= "Relatórios", menu= filemenu2)
 
         filemenu.add_command(label="Sair", command= quit)
         filemenu.add_command(label="Limpar", command= self.limpa_tela)
 
-        filemenu2.add_command(label="Ficha do Contato", command= self.gerar_relatorio)
 
 
 
